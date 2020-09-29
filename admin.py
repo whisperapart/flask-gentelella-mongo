@@ -12,6 +12,4 @@ try:
 except KeyError:
     exit('Error: Invalid GENTELELLA_CONFIG_MODE environment variable entry.')
 
-config_mode.MONGO_URI = "mongodb://10.37.129.100:27017/x0050"
-config_mode.JSON_AS_ASCII = False
 app = create_app(config_mode)

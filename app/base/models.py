@@ -1,5 +1,4 @@
-from bcrypt import gensalt, hashpw
-from app import login_manager, mongoc
+from app import login_manager, mgConnection
 
 
 class LoginUser:
@@ -23,17 +22,12 @@ class LoginUser:
 
 
 @login_manager.user_loader
-def user_loader(id):
-    u = mongoc.db.user_info.find_one({"username": id})
-    if not u:
-        return None
-    return LoginUser(username=u['username'])
+def user_loader(username):
+    u = mgConnection.db.user_info.find_one({"username": username})
+    return None if not u else LoginUser(username=u['username'])
 
 
 @login_manager.request_loader
 def request_loader(request):
-    username = request.form.get('username')
-    u = mongoc.db.user_info.find_one({"username": username})
-    if not u:
-        return None
-    return LoginUser(username=u['username'])
+    u = mgConnection.db.user_info.find_one({"username": request.form.get('username')})
+    return None if not u else LoginUser(username=u['username'])

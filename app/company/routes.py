@@ -36,13 +36,13 @@ def add_company():
         company["gender"] = request.form.get("gender")
         company["birthday"] = request.form.get("birthday")
 
-    current_app.mongoc.db.user_info.insert_one(company)
+    current_app.mgConnection.db.user_info.insert_one(company)
     return jsonify("success")
 
 
 @blueprint.route('/companyDB', methods=['GET'])
 def get_company_list_from_db():
-    conn = current_app.mongoc.db.user_info.find({},{'_id':0})
+    conn = current_app.mgConnection.db.user_info.find({}, {'_id':0})
     cList = []
     for i in conn:
         cList.append(i)
@@ -51,8 +51,8 @@ def get_company_list_from_db():
 
 @blueprint.route('/course', methods=['GET'])
 def get_course_from_db():
-    # conn = current_app.mongoc.db.user_info.find({"type": "course"}, {'_id': 0})
-    conn = current_app.mongoc.db.user_info.find({"type":"course","chapters.author":"唐国安"},{'_id':0})
+    # conn = current_app.mgConnection.db.user_info.find({"type": "course"}, {'_id': 0})
+    conn = current_app.mgConnection.db.user_info.find({"type": "course", "chapters.author": "唐国安"}, {'_id':0})
     cList = []
     for i in conn:
         cList.append(i)

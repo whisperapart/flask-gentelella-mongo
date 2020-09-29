@@ -7,7 +7,7 @@ from flask_login import (
     logout_user
 )
 
-from app import login_manager, mongoc
+from app import login_manager, mgConnection
 from app.base import blueprint
 from app.base.forms import LoginForm, CreateAccountForm
 from app.base.models import LoginUser
@@ -42,7 +42,7 @@ def login():
     if 'login' in request.form:
         username = request.form['username']
         password = request.form['password']
-        user = mongoc.db.user_info.find_one({"username": username}, {"_id": 0})
+        user = mgConnection.db.user_info.find_one({"username": username}, {"_id": 0})
         if user and checkpw(password.encode('utf8'), user['password']):
             user_obj = LoginUser(username=user['username'])
             login_user(user_obj)
@@ -61,11 +61,11 @@ def login():
 def create_user():
     user = dict()
     user['username'] = request.form['username']
-    udb = mongoc.db.user_info.find_one({"username": user['username'] }, {"_id": 0})
+    udb = mgConnection.db.user_info.find_one({"username": user['username']}, {"_id": 0})
     if udb:
         return jsonify('duplicate')
     user['password'] = hashpw(request.form['password'].encode('utf8'), gensalt())
-    mongoc.db.user_info.insert_one(user)
+    mgConnection.db.user_info.insert_one(user)
     return jsonify('success')
 
 

@@ -43,7 +43,6 @@ This project shows:
 
 ### 2. Export the following environment variables
     export GENTELELLA_CONFIG_MODE=Production
-    export GENTELELLA_DATABASE_PASSWORD=your-password
 
 ### 3. Follow the steps described in the previous section
 

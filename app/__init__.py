@@ -7,12 +7,12 @@ from os import path
 from flask_pymongo import PyMongo
 
 login_manager = LoginManager()
-mongoc = PyMongo()
+mgConnection = PyMongo()
 
 
 def register_extensions(app):
     login_manager.init_app(app)
-    mongoc.init_app(app)
+    mgConnection.init_app(app)
 
 
 def register_blueprints(app):
