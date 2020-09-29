@@ -1,0 +1,8 @@
+bcrypt
+flask
+flask_login
+flask_migrate
+flask_wtf
+gunicorn
+psycopg2
+Flask-PyMongo
